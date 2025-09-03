@@ -93,12 +93,12 @@
    - Coordinates are % (0..100) on HALF COURT. Origin at top-left, baseline at bottom.
 ========================================================= */
 const playsData = [
-  /* 1) Spain PnR (Stack) */
+  // --- RICH SEQUENCE EXAMPLE: Spain PnR ---
   {
     id:"spain-seq",
     name:"Spain PnR (Stack) — animated",
     tag:"PnR man",
-    goal:"Backscreen roller to stress drop; reads: roll/skip/short roll",
+    goal:"Backscreen the roller to stress drop; hit roll/skip/short-roll",
     useWhen:"Strong roller + shooter who can screen",
     avoidWhen:"Switch-all with great comms",
     options:["Roll read","Skip to pop","Short-roll DHO"],
@@ -106,377 +106,64 @@ const playsData = [
     defenseStart:{1:{x:14,y:76},2:{x:54,y:48},3:{x:26,y:62},4:{x:76,y:66},5:{x:46,y:60}},
     ballHandler:1,
     sequence:[
-      {duration:2.2, offense:{1:{x:32,y:64},5:{x:42,y:52}}, defense:{1:{x:28,y:66},5:{x:44,y:58}}},
+      // bring 1 to PnR
+      {duration:2.0, offense:{1:{x:32,y:64},5:{x:42,y:52}}, defense:{1:{x:28,y:66},5:{x:44,y:58}}},
+      // set Spain backscreen by 2 on 5
       {duration:2.0, offense:{2:{x:46,y:44}}, defense:{2:{x:52,y:50}}},
-      {duration:2.4, offense:{1:{x:46,y:58},5:{x:50,y:68}}, defense:{1:{x:44,y:60},5:{x:50,y:60}}, pass:{from:1,to:5}},
-      {duration:1.6, offense:{5:{x:50,y:78}}, defense:{5:{x:50,y:66}}}
+      // turn the corner; pass to roller
+      {duration:2.0, offense:{1:{x:46,y:58},5:{x:50,y:68}}, defense:{1:{x:44,y:60},5:{x:50,y:60}}, pass:{from:1,to:5}},
+      // finish at rim
+      {duration:1.5, offense:{5:{x:50,y:78}}, defense:{5:{x:50,y:66}}}
     ]
   },
 
-  /* 2) Hammer (Baseline Drift) */
+  // --- RICH SEQUENCE EXAMPLE: Hammer ---
   {
     id:"hammer-seq",
     name:"Hammer (Baseline Drift) — animated",
     tag:"man quick-hitter",
-    goal:"Drive baseline + hammer screen to drift corner 3",
+    goal:"Drive baseline + weakside hammer screen for corner 3",
     useWhen:"Help tags from strong side",
-    avoidWhen:"No corner shooter",
+    avoidWhen:"No corner shooting threat",
     options:["Drift 3","Skip slot","Dump to dunker"],
     offenseStart:{1:{x:20,y:66},2:{x:18,y:78},3:{x:76,y:50},4:{x:88,y:66},5:{x:40,y:52}},
     defenseStart:{1:{x:24,y:62},2:{x:20,y:72},3:{x:72,y:56},4:{x:84,y:72},5:{x:40,y:60}},
     ballHandler:1,
     sequence:[
       {duration:2.0, offense:{1:{x:28,y:58},5:{x:44,y:56}}, defense:{1:{x:30,y:60},5:{x:44,y:60}}},
+      // hammer screen by 4 for 3 in the corner
       {duration:2.0, offense:{4:{x:82,y:54},3:{x:88,y:50}}, defense:{4:{x:82,y:66},3:{x:76,y:56}}},
-      {duration:2.2, offense:{1:{x:36,y:54}}, defense:{1:{x:38,y:56}}, pass:{from:1,to:3}},
-      {duration:1.4, offense:{}, defense:{}}
+      // baseline drive + pass to corner
+      {duration:2.0, offense:{1:{x:36,y:54}}, defense:{1:{x:38,y:56}}, pass:{from:1,to:3}},
+      // shot / hold
+      {duration:1.5, offense:{}, defense:{}}
     ]
   },
 
-  /* 3) Double Drag (Early) */
+  // --- LEGACY: engine will auto-animate from arrows (everyone moves slowly) ---
   {
-    id:"double-drag-seq",
-    name:"Double Drag (Early)",
+    id:"double-drag",
+    name:"Double Drag (flow)",
     tag:"PnR man",
-    goal:"Two staggered screens in flow to create an early advantage",
+    goal:"Two staggered screens in early offense",
     useWhen:"Early vs drop or weak nail",
     avoidWhen:"Switch-heavy + physical guards",
     options:["Reject first","Hit pop","Shake 45"],
-    offenseStart:{1:{x:10,y:84},2:{x:22,y:66},3:{x:82,y:66},4:{x:30,y:58},5:{x:42,y:54}},
-    defenseStart:{1:{x:14,y:76},2:{x:28,y:72},3:{x:76,y:72},4:{x:30,y:64},5:{x:42,y:62}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{1:{x:30,y:66}}, defense:{1:{x:26,y:68}}},
-      {duration:2.2, offense:{1:{x:48,y:58},4:{x:34,y:58},5:{x:46,y:54}}, defense:{1:{x:44,y:60},4:{x:36,y:64},5:{x:46,y:62}}},
-      {duration:1.8, offense:{1:{x:56,y:60},2:{x:30,y:54}}, defense:{1:{x:52,y:62},2:{x:32,y:60}}}
-    ]
+    offense:[ {x:10,y:82,label:"1"},{x:30,y:56,label:"4"},{x:42,y:52,label:"5"},{x:20,y:62,label:"2"},{x:80,y:62,label:"3"} ],
+    defense:[ {x:14,y:76},{x:30,y:62},{x:42,y:62},{x:26,y:68},{x:74,y:68} ],
+    arrows:[ {from:{x:10,y:82}, to:{x:48,y:58}} ]
   },
-
-  /* 4) Pistol (21) */
   {
-    id:"pistol-seq",
-    name:"Pistol (21 Series)",
-    tag:"man",
-    goal:"Guard DHO into immediate wing PnR",
-    useWhen:"Quick side action without setup",
-    avoidWhen:"Aggressive top-lock on entry",
-    options:["Reject backdoor","Hit pop","Corner throw"],
-    offenseStart:{1:{x:14,y:84},2:{x:26,y:58},3:{x:16,y:54},4:{x:82,y:60},5:{x:40,y:52}},
-    defenseStart:{1:{x:18,y:76},2:{x:28,y:64},3:{x:18,y:60},4:{x:76,y:66},5:{x:40,y:60}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{1:{x:24,y:62}}, defense:{1:{x:22,y:66}}},
-      {duration:1.8, offense:{2:{x:30,y:58}}, defense:{2:{x:30,y:64}}, pass:{from:1,to:2}},
-      {duration:2.2, offense:{2:{x:40,y:52},5:{x:42,y:50}}, defense:{2:{x:40,y:58},5:{x:42,y:58}}},
-      {duration:1.6, offense:{2:{x:48,y:56}}, defense:{2:{x:46,y:58}}}
-    ]
-  },
-
-  /* 5) Chicago (Pin→DHO) */
-  {
-    id:"chicago-seq",
-    name:"Chicago Action (Pin → DHO)",
-    tag:"man",
-    goal:"Pin down into DHO for pull-up/drive",
-    useWhen:"Wing shooter-driver combo",
-    avoidWhen:"Top lock + switch-back",
-    options:["Reject into backdoor","Hit roller","Throwback"],
-    offenseStart:{1:{x:14,y:84},2:{x:30,y:60},3:{x:16,y:52},4:{x:82,y:60},5:{x:40,y:48}},
-    defenseStart:{1:{x:18,y:76},2:{x:30,y:66},3:{x:18,y:58},4:{x:76,y:66},5:{x:40,y:56}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{3:{x:28,y:58}}, defense:{3:{x:24,y:60}}},
-      {duration:2.0, offense:{2:{x:40,y:48}}, defense:{2:{x:40,y:56}}, pass:{from:1,to:2}},
-      {duration:2.2, offense:{2:{x:48,y:52},5:{x:44,y:48}}, defense:{2:{x:48,y:56},5:{x:44,y:56}}},
-      {duration:1.4, offense:{}, defense:{}}
-    ]
-  },
-
-  /* 6) Zoom (Wide Pin → DHO) */
-  {
-    id:"zoom-seq",
-    name:"Zoom (Wide Pin → DHO)",
-    tag:"man",
-    goal:"Wide pin to DHO for downhill drive",
-    useWhen:"To free your best driver",
-    avoidWhen:"Switch + gap help",
-    options:["Reject zoom","Rescreen","Throw to pop"],
-    offenseStart:{1:{x:16,y:84},2:{x:30,y:62},3:{x:20,y:52},4:{x:84,y:60},5:{x:42,y:48}},
-    defenseStart:{1:{x:20,y:76},2:{x:30,y:68},3:{x:22,y:58},4:{x:78,y:66},5:{x:42,y:56}},
-    ballHandler:3,
-    sequence:[
-      {duration:1.8, offense:{3:{x:30,y:62}}, defense:{3:{x:26,y:60}}},
-      {duration:2.0, offense:{3:{x:42,y:50}}, defense:{3:{x:40,y:56}}, pass:{from:2,to:3}},
-      {duration:2.2, offense:{3:{x:50,y:56}}, defense:{3:{x:48,y:58}}}
-    ]
-  },
-
-  /* 7) Ghost */
-  {
-    id:"ghost-seq",
-    name:"Ghost Screen",
-    tag:"man quick-hitter",
-    goal:"Fake screen into quick pop to punish switches",
-    useWhen:"Pre-switch/top lock",
-    avoidWhen:"No-shooting 4/5",
-    options:["Immediate 3","Attack closeout","Slip backdoor"],
-    offenseStart:{1:{x:18,y:82},2:{x:24,y:62},3:{x:76,y:62},4:{x:40,y:52},5:{x:52,y:40}},
-    defenseStart:{1:{x:22,y:76},2:{x:26,y:66},3:{x:72,y:68},4:{x:40,y:60},5:{x:52,y:50}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.6, offense:{1:{x:30,y:64},4:{x:42,y:52}}, defense:{1:{x:28,y:66},4:{x:42,y:60}}},
-      {duration:1.8, offense:{4:{x:50,y:44}}, defense:{4:{x:50,y:52}}},
-      {duration:1.6, pass:{from:1,to:4}, offense:{1:{x:36,y:62}}},
-      {duration:1.4, offense:{}, defense:{}}
-    ]
-  },
-
-  /* 8) Veer PnR */
-  {
-    id:"veer-seq",
-    name:"Veer PnR (Screen & Re-screen)",
-    tag:"PnR man",
-    goal:"Initial PnR → veer backscreen on popper",
-    useWhen:"Vs drop with nail help",
-    avoidWhen:"Switch-back experts",
-    options:["Hit pop","Veer slip","Throwback"],
-    offenseStart:{1:{x:16,y:84},2:{x:26,y:64},3:{x:78,y:64},4:{x:50,y:44},5:{x:40,y:52}},
-    defenseStart:{1:{x:20,y:76},2:{x:30,y:70},3:{x:72,y:70},4:{x:50,y:52},5:{x:40,y:60}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{1:{x:36,y:64},5:{x:42,y:52}}, defense:{1:{x:32,y:66},5:{x:42,y:58}}},
-      {duration:2.0, offense:{4:{x:44,y:48}}, defense:{4:{x:48,y:52}}},
-      {duration:2.2, offense:{1:{x:46,y:60}}, defense:{1:{x:44,y:62}}, pass:{from:4,to:1}}
-    ]
-  },
-
-  /* 9) Ram into PnR */
-  {
-    id:"ram-seq",
-    name:"Ram into PnR",
-    tag:"PnR man",
-    goal:"Backscreen (ram) the screener then flow to ball screen",
-    useWhen:"Free roller vs show/hedge",
-    avoidWhen:"Switch-all",
-    options:["Slip ram","Short roll","Shake to slot three"],
-    offenseStart:{1:{x:14,y:84},2:{x:26,y:62},3:{x:80,y:62},4:{x:22,y:50},5:{x:40,y:52}},
-    defenseStart:{1:{x:18,y:76},2:{x:30,y:68},3:{x:74,y:68},4:{x:24,y:56},5:{x:40,y:60}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{4:{x:40,y:52}}, defense:{4:{x:34,y:56}}},
-      {duration:2.0, offense:{1:{x:36,y:64}}, defense:{1:{x:32,y:66}}},
-      {duration:2.0, offense:{1:{x:46,y:58},5:{x:44,y:52}}, defense:{1:{x:44,y:60},5:{x:44,y:58}}}
-    ]
-  },
-
-  /* 10) Horns Split */
-  {
-    id:"horns-split-seq",
-    name:"Horns Split",
-    tag:"man",
-    goal:"Elbow entry with split action to free shooter",
-    useWhen:"2/3 read screens well",
-    avoidWhen:"Switch + top lock",
-    options:["Slip split","High-low","Fake split → PnR"],
-    offenseStart:{1:{x:14,y:82},2:{x:22,y:56},3:{x:78,y:58},4:{x:36,y:36},5:{x:64,y:36}},
-    defenseStart:{1:{x:18,y:76},2:{x:26,y:60},3:{x:74,y:64},4:{x:36,y:46},5:{x:64,y:46}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{1:{x:36,y:46}}, defense:{1:{x:32,y:52}}},
-      {duration:1.8, offense:{2:{x:36,y:38},3:{x:64,y:38}}, defense:{2:{x:36,y:46},3:{x:64,y:46}}},
-      {duration:2.0, offense:{1:{x:44,y:48}}, defense:{1:{x:42,y:52}}}
-    ]
-  },
-
-  /* 11) Horns Twist */
-  {
-    id:"horns-twist-seq",
-    name:"Horns Twist",
-    tag:"PnR man",
-    goal:"PnR then flip angle into second screen",
-    useWhen:"Confuse on-ball coverage",
-    avoidWhen:"Switch-all",
-    options:["Reject twist","Short roll","Throw to flare"],
-    offenseStart:{1:{x:16,y:84},2:{x:22,y:56},3:{x:78,y:56},4:{x:36,y:36},5:{x:64,y:36}},
-    defenseStart:{1:{x:20,y:76},2:{x:26,y:60},3:{x:74,y:62},4:{x:36,y:46},5:{x:64,y:46}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{1:{x:36,y:46}}, defense:{1:{x:32,y:52}}},
-      {duration:2.0, offense:{1:{x:44,y:50}}, defense:{1:{x:42,y:54}}},
-      {duration:1.8, offense:{1:{x:48,y:54}}, defense:{1:{x:46,y:56}}}
-    ]
-  },
-
-  /* 12) STS → Spain */
-  {
-    id:"sts-spain-seq",
-    name:"STS into Spain",
-    tag:"ATO PnR",
-    goal:"Screen-the-screener then stack PnR",
-    useWhen:"ATO to confuse tags",
-    avoidWhen:"Switch-all + help rules",
-    options:["Slip first","Backscreen roller","Throwback"],
-    offenseStart:{1:{x:14,y:82},2:{x:50,y:42},3:{x:24,y:58},4:{x:78,y:58},5:{x:42,y:48}},
-    defenseStart:{1:{x:18,y:76},2:{x:50,y:52},3:{x:28,y:62},4:{x:74,y:64},5:{x:42,y:56}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{3:{x:42,y:48}}, defense:{3:{x:34,y:54}}},
-      {duration:2.0, offense:{2:{x:46,y:44}}, defense:{2:{x:50,y:50}}},
-      {duration:2.2, offense:{1:{x:44,y:54},5:{x:46,y:64}}, defense:{1:{x:42,y:58},5:{x:46,y:58}}, pass:{from:1,to:5}}
-    ]
-  },
-
-  /* 13) Elevator */
-  {
-    id:"elevator-seq",
-    name:"Elevator Doors",
-    tag:"ATO man quick-hitter",
-    goal:"Spring shooter through closing screens",
-    useWhen:"BLOB/SLOB or ATO",
-    avoidWhen:"Switch-all",
-    options:["Slip early","Fake elevator → flare","Short roll"],
-    offenseStart:{1:{x:18,y:86},2:{x:28,y:66},3:{x:34,y:66},4:{x:36,y:42},5:{x:44,y:42}},
-    defenseStart:{1:{x:22,y:78},2:{x:30,y:72},3:{x:36,y:72},4:{x:36,y:50},5:{x:44,y:50}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{2:{x:36,y:46},3:{x:40,y:46}}, defense:{2:{x:36,y:54},3:{x:40,y:54}}},
-      {duration:1.8, offense:{1:{x:30,y:66}}, defense:{1:{x:28,y:70}}},
-      {duration:2.0, pass:{from:1,to:2}},
-      {duration:1.2, offense:{}, defense:{}}
-    ]
-  },
-
-  /* 14) Floppy */
-  {
-    id:"floppy-seq",
-    name:"Floppy",
-    tag:"man",
-    goal:"Single/double off baseline to free shooter",
-    useWhen:"After dead ball",
-    avoidWhen:"Switch + deny",
-    options:["Curl/square/fade","Rescreen","Throwback"],
-    offenseStart:{1:{x:20,y:86},2:{x:26,y:68},3:{x:44,y:68},4:{x:32,y:48},5:{x:48,y:48}},
-    defenseStart:{1:{x:24,y:78},2:{x:28,y:74},3:{x:46,y:74},4:{x:32,y:56},5:{x:48,y:56}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{2:{x:32,y:48}}, defense:{2:{x:32,y:56}}},
-      {duration:2.0, offense:{1:{x:30,y:70}}, defense:{1:{x:28,y:72}}, pass:{from:1,to:2}},
-      {duration:1.6, offense:{}, defense:{}}
-    ]
-  },
-
-  /* 15) Loop */
-  {
-    id:"loop-seq",
-    name:"Loop Series",
-    tag:"man",
-    goal:"Continuous cuts/screens to distort help",
-    useWhen:"Need movement",
-    avoidWhen:"Switch-all",
-    options:["Pin-in","Backdoor","DHO rescreen"],
-    offenseStart:{1:{x:16,y:86},2:{x:30,y:64},3:{x:20,y:50},4:{x:82,y:58},5:{x:42,y:48}},
-    defenseStart:{1:{x:20,y:78},2:{x:30,y:70},3:{x:22,y:56},4:{x:76,y:64},5:{x:42,y:56}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{1:{x:28,y:64}}, defense:{1:{x:26,y:66}}},
-      {duration:2.0, offense:{2:{x:40,y:48}}, defense:{2:{x:40,y:56}}},
-      {duration:1.8, offense:{1:{x:44,y:54}}, defense:{1:{x:42,y:58}}}
-    ]
-  },
-
-  /* 16) Zipper PnR */
-  {
-    id:"zipper-seq",
-    name:"Zipper PnR",
-    tag:"man",
-    goal:"Zipper cut entry into middle PnR",
-    useWhen:"Get PG downhill",
-    avoidWhen:"Switch denial",
-    options:["Reject zipper","Hit pop","Skip weakside"],
-    offenseStart:{1:{x:18,y:88},2:{x:28,y:70},3:{x:16,y:54},4:{x:80,y:60},5:{x:42,y:50}},
-    defenseStart:{1:{x:22,y:80},2:{x:30,y:76},3:{x:18,y:60},4:{x:74,y:66},5:{x:42,y:58}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{1:{x:30,y:70}}, defense:{1:{x:28,y:72}}},
-      {duration:2.0, offense:{1:{x:42,y:56},5:{x:44,y:50}}, defense:{1:{x:40,y:60},5:{x:44,y:58}}},
-      {duration:1.6, offense:{1:{x:50,y:58}}, defense:{1:{x:48,y:60}}}
-    ]
-  },
-
-  /* 17) Box BLOB Lob */
-  {
-    id:"box-lob-seq",
-    name:"Box BLOB Lob",
-    tag:"ATO quick-hitter",
-    goal:"Quick lob from box alignment",
-    useWhen:"Baseline inbound",
-    avoidWhen:"Elite rim protector",
-    options:["Fake lob slip","Backdoor","Throwback"],
-    offenseStart:{1:{x:50,y:90},2:{x:34,y:64},3:{x:66,y:64},4:{x:34,y:42},5:{x:66,y:42}},
-    defenseStart:{1:{x:52,y:84},2:{x:36,y:70},3:{x:64,y:70},4:{x:34,y:50},5:{x:66,y:50}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{3:{x:50,y:38},4:{x:50,y:38}}, defense:{3:{x:60,y:50},4:{x:40,y:50}}},
-      {duration:2.0, pass:{from:1,to:3}},
-      {duration:1.4, offense:{}, defense:{}}
-    ]
-  },
-
-  /* 18) 5-Out Read & React */
-  {
-    id:"fiveout-seq",
-    name:"Motion 5-Out (Read & React)",
+    id:"five-out",
+    name:"Motion 5-Out (read & react)",
     tag:"5-out man",
-    goal:"Spacing for drive/kick and random DHOs",
-    useWhen:"Flow vs any coverage",
+    goal:"Max spacing for drive/kick/DHOs",
+    useWhen:"Good for flow vs any coverage",
     avoidWhen:"Need precise ATO",
-    options:["Pass-cut-replace","Backdoor vs top-lock","Quick DHO"],
-    offenseStart:{1:{x:12,y:74},2:{x:28,y:50},3:{x:72,y:50},4:{x:50,y:42},5:{x:88,y:74}},
-    defenseStart:{1:{x:16,y:78},2:{x:30,y:58},3:{x:70,y:58},4:{x:50,y:52},5:{x:84,y:78}},
-    ballHandler:1,
-    sequence:[
-      {duration:1.8, offense:{1:{x:28,y:50}}, defense:{1:{x:24,y:56}}},
-      {duration:1.8, offense:{2:{x:50,y:42}}, defense:{2:{x:50,y:52}}, pass:{from:1,to:2}},
-      {duration:2.0, offense:{2:{x:60,y:48}}, defense:{2:{x:58,y:52}}}
-    ]
-  },
-
-  /* 19) Vs 2-3 Zone Flood */
-  {
-    id:"zone23-flood-seq",
-    name:"Vs 2-3 Zone Flood",
-    tag:"zone",
-    goal:"Overload one side and dive the gap",
-    useWhen:"2-3 zone",
-    avoidWhen:"Matchup zone bumps early",
-    options:["Skip weak slot","Short corner touch","Middle flash"],
-    offenseStart:{1:{x:14,y:80},2:{x:30,y:56},3:{x:18,y:50},4:{x:58,y:50},5:{x:44,y:40}},
-    defenseStart:{1:{x:24,y:46},2:{x:36,y:46},3:{x:20,y:64},4:{x:36,y:64},5:{x:30,y:58}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{3:{x:30,y:56}}, defense:{3:{x:24,y:60}}},
-      {duration:2.2, offense:{5:{x:34,y:48}}, defense:{5:{x:32,y:52}}},
-      {duration:1.8, offense:{1:{x:38,y:54}}, defense:{1:{x:32,y:50}}, pass:{from:1,to:5}}
-    ]
-  },
-
-  /* 20) Vs 1-3-1 High Dive */
-  {
-    id:"zone131-dive-seq",
-    name:"Vs 1-3-1 High Dive",
-    tag:"zone",
-    goal:"Pin the top, dive middle/short corner",
-    useWhen:"1-3-1",
-    avoidWhen:"Extended traps",
-    options:["Short corner","Lob baseline","Opposite skip"],
-    offenseStart:{1:{x:16,y:82},2:{x:30,y:56},3:{x:20,y:50},4:{x:64,y:52},5:{x:42,y:44}},
-    defenseStart:{1:{x:24,y:40},2:{x:32,y:56},3:{x:24,y:62},4:{x:40,y:56},5:{x:16,y:58}},
-    ballHandler:1,
-    sequence:[
-      {duration:2.0, offense:{1:{x:30,y:56}}, defense:{1:{x:26,y:48}}},
-      {duration:2.0, offense:{5:{x:34,y:50}}, defense:{5:{x:28,y:54}}},
-      {duration:2.0, offense:{2:{x:42,y:46}}, defense:{2:{x:38,y:52}}, pass:{from:1,to:2}}
-    ]
+    options:["Pass-cut-replace","Backdoor vs top lock","Quick DHO"],
+    offense:[ {x:12,y:70,label:"1"},{x:28,y:48,label:"2"},{x:50,y:40,label:"4"},{x:72,y:48,label:"3"},{x:88,y:70,label:"5"} ],
+    defense:[ {x:16,y:74},{x:30,y:56},{x:50,y:52},{x:70,y:56},{x:84,y:74} ],
+    arrows:[ {from:{x:12,y:70}, to:{x:28,y:48}}, {from:{x:28,y:48}, to:{x:50,y:40}} ]
   }
 ];
 
