@@ -1,162 +1,253 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Court Vision</title>
-  <meta name="description" content="Basketball 5x5 play diagrams in your browser. Scroll, learn when to run them, and export to SVG/PNG instantly." />
-  <style>
-    :root {
-      --bg: #0b0d10;
-      --card: #12161c;
-      --ink: #e9eef5;
-      --muted: #a8b2c1;
-      --accent: #ffb703;
-      --court: #f6b45b;
-      --court-lines: #2b2f36;
-      --offense: #e63946;
-      --defense: #1b1b1b;
-      --arrow: #4a90e2;
-      --radius: 14px;
-      --shadow: 0 6px 20px rgba(0,0,0,.35);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(90vw 90vh at 20% -10%, #151a21, #0b0d10);
-      color: var(--ink);
-    }
-    header {
-      position: sticky; top: 0; z-index: 5;
-      backdrop-filter: blur(10px);
-      background: rgba(11,13,16,.6);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 18px 16px; }
-    h1 { margin: 6px 0 10px; font-size: 20px; letter-spacing: .3px; }
-    .sub { color: var(--muted); font-size: 14px; margin-bottom: 12px; }
-    .controls {
-      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
-    }
-    input[type="search"] {
-      width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08);
-      background: #0f141a; color: var(--ink); outline: none;
-    }
-    .pill {
-      font-size: 13px; padding: 8px 12px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.1); color: var(--muted);
-      background: #0f141a;
-    }
-    main { padding: 22px 16px 50px; }
-    .grid {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; gap: 16px;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    }
-    .card {
-      background: linear-gradient(180deg, #141922, #10151b);
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      display: flex; flex-direction: column;
-    }
-    .card-head {
-      padding: 14px 14px 10px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px dashed rgba(255,255,255,.06);
-    }
-    .title { font-weight: 700; font-size: 16px; }
-    .badge { font-size: 12px; color: #0b0d10; background: var(--accent); padding: 4px 8px; border-radius: 999px; }
-    .svg-wrap { padding: 10px 10px 0 10px; }
-    .meta {
-      padding: 10px 14px 14px;
-      display: grid; gap: 6px; color: var(--muted); font-size: 13px;
-    }
-    .meta strong { color: var(--ink); font-weight: 600; }
-    .options { margin-top: 4px; }
-    .options li { margin-left: 18px; }
-    .actions {
-      padding: 10px 14px 14px; display: flex; gap: 8px; flex-wrap: wrap;
-      border-top: 1px dashed rgba(255,255,255,.06);
-    }
-    button {
-      appearance: none; border: 1px solid rgba(255,255,255,.12); background: transparent;
-      color: var(--ink); padding: 8px 10px; border-radius: 10px; cursor: pointer; font-size: 13px;
-    }
-    button:hover { border-color: rgba(255,255,255,.3); }
-    .empty { color: var(--muted); text-align: center; padding: 30px; }
-    footer { color: var(--muted); text-align: center; padding: 24px; font-size: 12px; opacity: .8; }
-    @media (min-width: 1100px) {
-      h1 { font-size: 22px; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Court Vision — Modern 5×5 Plays</title>
+<meta name="description" content="Modern basketball 5x5 plays with crisp court diagrams, animation, and SVG/PNG exports. No login." />
+<style>
+  :root{
+    /* Light, print-friendly theme like your reference */
+    --bg:#f8f9fb;
+    --ink:#111;
+    --muted:#555;
+    --card:#ffffff;
+    --line:#111;
+    --dash:#888;
+    --offense:#e03a3a;   /* red */
+    --defense:#111111;   /* black */
+    --arrow:#1d4ed8;     /* blue path */
+    --radius:14px;
+    --shadow:0 4px 16px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:linear-gradient(#fff, #f6f7fb);
+    font-family:ui-sans-serif, -apple-system, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  }
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:saturate(1.2) blur(8px);
+    border-bottom:1px solid #e7e7ea;
+  }
+  .wrap{max-width:1200px; margin:0 auto; padding:18px 16px;}
+  h1{margin:2px 0 8px; font-size:22px; letter-spacing:.2px}
+  .sub{color:var(--muted); font-size:14px; margin-bottom:12px}
+  .controls{
+    display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center;
+  }
+  input[type="search"]{
+    width:100%; padding:12px 14px; border-radius:10px; border:1px solid #d9dbe3; background:#fff; color:var(--ink);
+  }
+  select, .pill{
+    padding:10px 12px; border-radius:10px; border:1px solid #d9dbe3; background:#fff; color:var(--ink);
+    font-size:13px;
+  }
+  .pill{color:#333}
+  main{padding:22px 16px 60px}
+  .grid{
+    max-width:1200px; margin:0 auto;
+    display:grid; gap:16px; grid-template-columns:repeat(auto-fill, minmax(320px,1fr));
+  }
+  .card{
+    background:var(--card); border:1px solid #e6e7ec; border-radius:var(--radius); box-shadow:var(--shadow);
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+  .card-head{
+    padding:12px 14px 10px; display:flex; justify-content:space-between; align-items:center;
+    border-bottom:1px solid #eee;
+  }
+  .title{font-weight:700; font-size:16px}
+  .badge{font-size:12px; padding:4px 8px; border-radius:999px; background:#eef2ff; color:#1d4ed8; border:1px solid #dbe4ff}
+  .svg-wrap{padding:12px 12px 0 12px}
+  .meta{padding:10px 14px 12px; display:grid; gap:6px; color:#333; font-size:13px}
+  .meta strong{font-weight:600}
+  .options{margin-top:2px}
+  .options li{margin-left:18px}
+  .actions{
+    padding:10px 14px 14px; display:flex; flex-wrap:wrap; gap:8px; border-top:1px solid #eee;
+  }
+  button{
+    appearance:none; border:1px solid #d9dbe3; background:#fff; color:#111; padding:8px 10px; border-radius:10px; cursor:pointer; font-size:13px;
+  }
+  button:hover{border-color:#b8bbca}
+  .speed{
+    display:inline-flex; align-items:center; gap:6px; margin-left:auto; font-size:12px; color:#444;
+  }
+  .empty{color:#666; text-align:center; padding:30px}
+  footer{color:#666; text-align:center; padding:24px; font-size:12px}
+
+  /* Court look — crisp black lines on white */
+  .court-bg{fill:#ffffff}
+  .court-line{stroke:var(--line); stroke-width:1.6; fill:none}
+  .court-dash{stroke:var(--dash); stroke-width:1.4; stroke-dasharray:4 4; fill:none}
+</style>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <h1>🏀 Court Vision</h1>
-      <div class="sub">Scroll the library. Click a card to download the diagram. No login, just hoops.</div>
-      <div class="controls">
-        <input id="search" type="search" placeholder="Search plays, goals, situations…" />
-        <div class="pill" id="count">0 plays</div>
-      </div>
+<header>
+  <div class="wrap">
+    <h1>🏀 Court Vision — Modern 5×5 Playbook</h1>
+    <div class="sub">Clean court diagrams. 20 modern sets. Click <em>Run</em> to animate actions. Download SVG/PNG. No login.</div>
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search plays, tags, situations (e.g., spain, horns, hammer, zone, ATO, pistol) …" />
+      <select id="filterTag">
+        <option value="">All Tags</option>
+        <option>man</option><option>zone</option><option>ATO</option><option>PnR</option><option>5-out</option><option>quick-hitter</option>
+      </select>
+      <div class="pill" id="count">0 plays</div>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <div class="grid" id="grid"></div>
-    <div class="empty" id="empty" hidden>Nothing matches your search.</div>
-  </main>
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden>No plays match your search/filter.</div>
+</main>
 
-  <footer>
-    Built with ❤️ for coaches & hoopers. Add more plays inside <code>playsData</code>.
-  </footer>
+<footer>Built for coaches & hoopers. Add more plays in <code>playsData</code>. © Court Vision</footer>
 
 <script>
+/* ====== DATA: 20 MODERN PLAYS ======
+   Coordinates in percentage (0..100) of a mini FULL-court-ish canvas.
+   For simplicity we render a symmetric full court (both halves), but
+   actions typically occur in the left half. Feel free to tweak.
+*/
 const playsData = [
-  {
-    id: "horns-1",
-    name: "Horns (High Double Screens)",
-    goal: "Quick advantage via high pick-and-roll or elbow touch",
-    useWhen: "Good after dead balls vs man defense",
-    avoidWhen: "If defense traps high and bigs can’t screen well",
-    options: ["PNR into roll/pop", "Elbow entry DHO", "Reject screen baseline"],
-    offense: [ {x:10,y:80,label:"1"}, {x:35,y:25,label:"4"}, {x:65,y:25,label:"5"}, {x:20,y:55,label:"2"}, {x:80,y:55,label:"3"} ],
-    defense: [ {x:12,y:78}, {x:35,y:45}, {x:65,y:45}, {x:25,y:70}, {x:75,y:70} ],
-    arrows: [ {from:{x:10,y:80}, to:{x:50,y:50}}, {from:{x:35,y:25}, to:{x:45,y:40}}, {from:{x:65,y:25}, to:{x:55,y:40}} ],
-    tag: "man half-court"
+  { id:"spain-pnr", name:"Spain PnR (Stack)", goal:"Backscreen the roller to stress drop coverage", useWhen:"Your 5 is strong rolling and you have a shooter who can screen", avoidWhen:"Switch-all with great comms", options:["Hit roller","Skip to shooter","Short-roll into DHO"], tag:"PnR man",
+    offense:[{x:14,y:68,label:"1"},{x:46,y:44,label:"5"},{x:54,y:38,label:"2"},{x:22,y:52,label:"3"},{x:80,y:50,label:"4"}],
+    defense:[{x:16,y:66},{x:46,y:54},{x:54,y:48},{x:26,y:58},{x:76,y:58}],
+    arrows:[{from:{x:14,y:68},to:{x:40,y:52}},{from:{x:54,y:38},to:{x:46,y:44}}]
   },
-  {
-    id: "flex-1",
-    name: "Flex (Baseline Screen Series)",
-    goal: "Layups or seals from cross-screens",
-    useWhen: "Disciplined cutters vs man defense",
-    avoidWhen: "Switch-heavy defenses",
-    options: ["Flex cut", "Downscreen top", "Slip vs switch"],
-    offense: [ {x:15,y:65,label:"1"},{x:30,y:80,label:"2"},{x:80,y:65,label:"3"},{x:25,y:40,label:"4"},{x:70,y:40,label:"5"} ],
-    defense: [ {x:18,y:63},{x:29,y:70},{x:78,y:62},{x:28,y:50},{x:70,y:50} ],
-    arrows: [ {from:{x:80,y:65}, to:{x:30,y:65}}, {from:{x:30,y:80}, to:{x:35,y:50}} ],
-    tag: "man motion"
+  { id:"double-drag", name:"Double Drag", goal:"Flow into advantage with two staggered PnR screens in transition", useWhen:"Early offense vs drop or weak nail help", avoidWhen:"Switch-heavy + physical guards", options:["Reject first","Hit pop big","Corner shake 45"], tag:"PnR man",
+    offense:[{x:12,y:70,label:"1"},{x:34,y:48,label:"4"},{x:46,y:44,label:"5"},{x:20,y:56,label:"2"},{x:80,y:56,label:"3"}],
+    defense:[{x:14,y:66},{x:34,y:56},{x:46,y:56},{x:26,y:62},{x:76,y:62}],
+    arrows:[{from:{x:12,y:70},to:{x:48,y:50}}]
+  },
+  { id:"pistol", name:"Pistol (21 Series)", goal:"Guard DHO into immediate PnR on the wing", useWhen:"You want quick side action without setting up", avoidWhen:"Aggressive top lock on the entry", options:["Reject DHO backdoor","Hit pop","Throw to corner"], tag:"man",
+    offense:[{x:18,y:70,label:"1"},{x:28,y:52,label:"2"},{x:40,y:48,label:"5"},{x:14,y:50,label:"3"},{x:82,y:55,label:"4"}],
+    defense:[{x:20,y:66},{x:28,y:58},{x:40,y:58},{x:18,y:56},{x:76,y:62}],
+    arrows:[{from:{x:18,y:70},to:{x:28,y:52}},{from:{x:28,y:52},to:{x:40,y:48}}]
+  },
+  { id:"horns-split", name:"Horns Split", goal:"Elbow entries with split action to free a shooter", useWhen:"Your 2/3 read screens well", avoidWhen:"Switch + top lock", options:["Slip split","High-low","Fake split into PnR"], tag:"man",
+    offense:[{x:16,y:70,label:"1"},{x:36,y:36,label:"4"},{x:64,y:36,label:"5"},{x:22,y:50,label:"2"},{x:78,y:52,label:"3"}],
+    defense:[{x:18,y:64},{x:36,y:46},{x:64,y:46},{x:26,y:60},{x:74,y:60}],
+    arrows:[{from:{x:16,y:70},to:{x:50,y:40}},{from:{x:22,y:50},to:{x:36,y:36}},{from:{x:78,y:52},to:{x:64,y:36}}]
+  },
+  { id:"horns-flare", name:"Horns Flare", goal:"Flare the weakside big for a catch-and-shoot or drive", useWhen:"Vs. drop/nail help", avoidWhen:"Switch + switch back teams", options:["Flare skip","Rescreen middle","High-low"], tag:"man",
+    offense:[{x:16,y:70,label:"1"},{x:36,y:36,label:"4"},{x:64,y:36,label:"5"},{x:22,y:52,label:"2"},{x:80,y:56,label:"3"}],
+    defense:[{x:18,y:64},{x:36,y:46},{x:64,y:46},{x:26,y:60},{x:74,y:62}],
+    arrows:[{from:{x:16,y:70},to:{x:36,y:42}},{from:{x:64,y:36},to:{x:80,y:48}}]
+  },
+  { id:"ram-pnr", name:"Ram into PnR", goal:"Backscreen (ram) the screener then flow to ball screen", useWhen:"To free roller vs show/hedge", avoidWhen:"Switch-all", options:["Slip ram","Short roll","Shake to slot three"], tag:"PnR man",
+    offense:[{x:14,y:68,label:"1"},{x:40,y:50,label:"5"},{x:28,y:56,label:"2"},{x:22,y:44,label:"4"},{x:80,y:54,label:"3"}],
+    defense:[{x:16,y:64},{x:40,y:58},{x:28,y:62},{x:24,y:52},{x:76,y:60}],
+    arrows:[{from:{x:22,y:44},to:{x:40,y:50}},{from:{x:14,y:68},to:{x:40,y:52}}]
+  },
+  { id:"ghost", name:"Ghost Screen", goal:"Fake screen into pop to punish switches", useWhen:"Defenders pre-switch or top lock", avoidWhen:"No shooting 4/5", options:["Immediate three","Attack closeout","Slip backdoor"], tag:"man quick-hitter",
+    offense:[{x:16,y:68,label:"1"},{x:40,y:50,label:"4"},{x:24,y:56,label:"2"},{x:76,y:56,label:"3"},{x:52,y:38,label:"5"}],
+    defense:[{x:18,y:64},{x:40,y:58},{x:26,y:60},{x:72,y:62},{x:52,y:48}],
+    arrows:[{from:{x:40,y:50},to:{x:48,y:40}}]
+  },
+  { id:"zoom", name:"Zoom (Wide Pin → DHO)", goal:"Wide pindown to get into DHO downhill", useWhen:"To free your best driver", avoidWhen:"Switch + gap help", options:["Reject zoom","Rescreen","Throw to pop"], tag:"man",
+    offense:[{x:18,y:70,label:"1"},{x:30,y:56,label:"2"},{x:40,y:48,label:"5"},{x:20,y:48,label:"3"},{x:80,y:56,label:"4"}],
+    defense:[{x:20,y:66},{x:30,y:62},{x:40,y:58},{x:22,y:54},{x:74,y:62}],
+    arrows:[{from:{x:20,y:48},to:{x:30,y:56}},{from:{x:30,y:56},to:{x:40,y:48}}]
+  },
+  { id:"chicago", name:"Chicago Action (Pin → DHO)", goal:"Pin down into DHO for pull-up or drive", useWhen:"Wing shooter/driver combo", avoidWhen:"Top lock + switch back", options:["Reject into backdoor","Hit roller","Throwback"], tag:"man",
+    offense:[{x:18,y:70,label:"1"},{x:30,y:54,label:"2"},{x:40,y:46,label:"5"},{x:16,y:48,label:"3"},{x:80,y:54,label:"4"}],
+    defense:[{x:20,y:66},{x:30,y:60},{x:40,y:56},{x:18,y:54},{x:74,y:60}],
+    arrows:[{from:{x:16,y:48},to:{x:30,y:54}},{from:{x:30,y:54},to:{x:40,y:46}}]
+  },
+  { id:"elevator", name:"Elevator Doors", goal:"Spring a shooter through closing screens", useWhen:"BLOB/SLOB or ATO", avoidWhen:"Switch-all", options:["Slip early","Fake elevator to flare","Hit short roll"], tag:"ATO man quick-hitter",
+    offense:[{x:18,y:72,label:"1"},{x:36,y:40,label:"4"},{x:44,y:40,label:"5"},{x:28,y:64,label:"2"},{x:32,y:64,label:"3"}],
+    defense:[{x:20,y:66},{x:36,y:50},{x:44,y:50},{x:30,y:70},{x:34,y:70}],
+    arrows:[{from:{x:28,y:64},to:{x:40,y:44}}]
+  },
+  { id:"hammer", name:"Hammer (Baseline Drift)", goal:"Drive baseline + weakside hammer screen for corner 3", useWhen:"Tags from strong side", avoidWhen:"No corner shooters", options:["Hit drift","Skip opposite slot","Dump to dunker"], tag:"man quick-hitter",
+    offense:[{x:24,y:62,label:"1"},{x:40,y:48,label:"5"},{x:18,y:74,label:"2"},{x:76,y:46,label:"3"},{x:86,y:64,label:"4"}],
+    defense:[{x:26,y:66},{x:40,y:56},{x:20,y:70},{x:72,y:52},{x:84,y:70}],
+    arrows:[{from:{x:24,y:62},to:{x:34,y:56}},{from:{x:86,y:64},to:{x:76,y:46}}]
+  },
+  { id:"floppy", name:"Floppy", goal:"Single/double off baseline to free a shooter", useWhen:"After dead ball", avoidWhen:"Switch + deny", options:["Curl/square/fade reads","Rescreen","Throwback"], tag:"man",
+    offense:[{x:20,y:76,label:"1"},{x:32,y:48,label:"4"},{x:48,y:48,label:"5"},{x:26,y:64,label:"2"},{x:42,y:64,label:"3"}],
+    defense:[{x:22,y:70},{x:32,y:56},{x:48,y:56},{x:28,y:70},{x:44,y:70}],
+    arrows:[{from:{x:26,y:64},to:{x:32,y:48}}]
+  },
+  { id:"box-lob", name:"Box BLOB Lob", goal:"Quick lob from box alignment", useWhen:"ATO/Baseline inbound", avoidWhen:"Elite rim protectors", options:["Fake lob slip","Backdoor","Throwback to inbounder"], tag:"ATO quick-hitter",
+    offense:[{x:50,y:85,label:"1"},{x:30,y:55,label:"2"},{x:70,y:55,label:"3"},{x:30,y:35,label:"4"},{x:70,y:35,label:"5"}],
+    defense:[{x:52,y:80},{x:32,y:60},{x:68,y:60},{x:30,y:45},{x:70,y:45}],
+    arrows:[{from:{x:70,y:55},to:{x:50,y:30}},{from:{x:30,y:35},to:{x:50,y:30}}]
+  },
+  { id:"five-out", name:"Motion 5-Out (Read & React)", goal:"Max spacing for drive/kick and random DHOs", useWhen:"Against anything to flow", avoidWhen:"Need set precision late clock", options:["Pass-cut-replace","Backdoor vs top lock","Quick DHO"], tag:"5-out man",
+    offense:[{x:12,y:66,label:"1"},{x:28,y:42,label:"2"},{x:50,y:34,label:"4"},{x:72,y:42,label:"3"},{x:88,y:66,label:"5"}],
+    defense:[{x:15,y:70},{x:30,y:50},{x:50,y:46},{x:70,y:50},{x:85,y:70}],
+    arrows:[{from:{x:12,y:66},to:{x:28,y:42}},{from:{x:28,y:42},to:{x:50,y:34}}]
+  },
+  { id:"zone-23-flood", name:"Vs 2-3 Zone Flood", goal:"Overload a side then dive gap", useWhen:"2-3 zone", avoidWhen:"Matchup zone that bumps early", options:["Skip to weak slot","Short corner touch","Middle flash"], tag:"zone",
+    offense:[{x:14,y:70,label:"1"},{x:30,y:50,label:"2"},{x:44,y:38,label:"5"},{x:18,y:44,label:"3"},{x:58,y:44,label:"4"}],
+    defense:[{x:24,y:46},{x:36,y:46},{x:30,y:60},{x:18,y:60},{x:42,y:60}],
+    arrows:[{from:{x:18,y:44},to:{x:30,y:50}},{from:{x:44,y:38},to:{x:30,y:46}}]
+  },
+  { id:"zone-131-dive", name:"Vs 1-3-1 High Dive", goal:"Pin the top and dive middle/short corner", useWhen:"1-3-1", avoidWhen:"Extended traps", options:["Short corner","Lob to baseline","Opposite skip"], tag:"zone",
+    offense:[{x:16,y:72,label:"1"},{x:30,y:50,label:"2"},{x:42,y:42,label:"5"},{x:20,y:44,label:"3"},{x:64,y:46,label:"4"}],
+    defense:[{x:24,y:40},{x:32,y:56},{x:24,y:60},{x:40,y:56},{x:16,y:56}],
+    arrows:[{from:{x:16,y:72},to:{x:30,y:50}},{from:{x:42,y:42},to:{x:34,y:46}}]
+  },
+  { id:"loop", name:"Loop Series", goal:"Continuous cuts/screens to distort help", useWhen:"Need movement", avoidWhen:"Switch-all", options:["Pin-in","Backdoor","DHO rescreen"], tag:"man",
+    offense:[{x:18,y:72,label:"1"},{x:28,y:52,label:"2"},{x:40,y:46,label:"5"},{x:20,y:46,label:"3"},{x:80,y:54,label:"4"}],
+    defense:[{x:20,y:66},{x:28,y:58},{x:40,y:56},{x:22,y:52},{x:74,y:60}],
+    arrows:[{from:{x:18,y:72},to:{x:28,y:52}},{from:{x:28,y:52},to:{x:40,y:46}}]
+  },
+  { id:"veer", name:"Veer PnR (Screen & Re-screen)", goal:"Initial PnR into veer back screen on popper", useWhen:"Vs drop with nail help", avoidWhen:"Switch-back experts", options:["Hit pop","Veer slip","Throwback"], tag:"PnR man",
+    offense:[{x:16,y:70,label:"1"},{x:40,y:50,label:"5"},{x:50,y:44,label:"4"},{x:22,y:56,label:"2"},{x:78,y:56,label:"3"}],
+    defense:[{x:18,y:66},{x:40,y:58},{x:50,y:54},{x:26,y:62},{x:74,y:62}],
+    arrows:[{from:{x:16,y:70},to:{x:40,y:52}},{from:{x:50,y:44},to:{x:40,y:50}}]
+  },
+  { id:"twirl", name:"Twirl (Screen-the-Screener)", goal:"Back screen then down screen for shot", useWhen:"To punish help on first screen", avoidWhen:"Switch-all", options:["Curl/flare reads","Slip first","High-low"], tag:"man",
+    offense:[{x:18,y:72,label:"1"},{x:34,y:50,label:"4"},{x:44,y:46,label:"5"},{x:24,y:58,label:"2"},{x:76,y:54,label:"3"}],
+    defense:[{x:20,y:66},{x:34,y:58},{x:44,y:54},{x:26,y:64},{x:72,y:60}],
+    arrows:[{from:{x:24,y:58},to:{x:34,y:50}},{from:{x:34,y:50},to:{x:44,y:46}}]
+  },
+  { id:"zipper", name:"Zipper PnR", goal:"Zipper cut entry into middle PnR", useWhen:"Get your PG downhill", avoidWhen:"Switch denial", options:["Reject zipper","Throw to pop","Skip weakside"], tag:"man",
+    offense:[{x:18,y:76,label:"1"},{x:28,y:60,label:"2"},{x:40,y:48,label:"5"},{x:16,y:48,label:"3"},{x:80,y:56,label:"4"}],
+    defense:[{x:20,y:70},{x:28,y:66},{x:40,y:56},{x:18,y:54},{x:74,y:60}],
+    arrows:[{from:{x:18,y:76},to:{x:28,y:60}},{from:{x:28,y:60},to:{x:40,y:48}}]
+  },
+  { id:"horns-tt", name:"Horns Twist", goal:"PnR then flip angle into second screen", useWhen:"Confuse on-ball coverage", avoidWhen:"Switch-all", options:["Reject twist","Hit short roll","Throw to flare"], tag:"PnR man",
+    offense:[{x:16,y:70,label:"1"},{x:36,y:36,label:"4"},{x:64,y:36,label:"5"},{x:22,y:52,label:"2"},{x:78,y:52,label:"3"}],
+    defense:[{x:18,y:64},{x:36,y:46},{x:64,y:46},{x:26,y:60},{x:74,y:60}],
+    arrows:[{from:{x:16,y:70},to:{x:36,y:44}},{from:{x:36,y:36},to:{x:44,y:44}}]
+  },
+  { id:"sts-spain", name:"STS into Spain", goal:"Screen-the-screener then stack PnR", useWhen:"ATO to confuse tags", avoidWhen:"Switch-all + help rules", options:["Slip first","Backscreen roller","Throwback"], tag:"ATO PnR",
+    offense:[{x:16,y:70,label:"1"},{x:40,y:48,label:"5"},{x:52,y:40,label:"2"},{x:24,y:56,label:"3"},{x:78,y:56,label:"4"}],
+    defense:[{x:18,y:64},{x:40,y:56},{x:52,y:50},{x:26,y:62},{x:74,y:62}],
+    arrows:[{from:{x:24,y:56},to:{x:40,y:48}},{from:{x:52,y:40},to:{x:40,y:48}}]
   }
 ];
 
+/* ====== RENDERING ====== */
 const grid = document.getElementById('grid');
 const searchEl = document.getElementById('search');
 const countEl = document.getElementById('count');
 const emptyEl = document.getElementById('empty');
-
-function pct(v){ return v + '%'; }
-function toXY(px,py,W,H){ const PAD=12; const innerW=W-2*PAD, innerH=H-2*PAD; return { x: PAD+innerW*(px/100), y: PAD+innerH*(py/100) }; }
+const filterTagEl = document.getElementById('filterTag');
 
 function render(){
   grid.innerHTML='';
-  const q=(searchEl.value||'').toLowerCase();
-  const filtered=playsData.filter(p=>[p.name,p.goal,p.useWhen,p.avoidWhen,(p.options||[]).join(' '),p.tag].join(' ').toLowerCase().includes(q));
+  const q=(searchEl.value||'').trim().toLowerCase();
+  const tag=(filterTagEl.value||'').toLowerCase();
+  const filtered = playsData.filter(p=>{
+    const hay=[p.name,p.goal,p.useWhen,p.avoidWhen,(p.options||[]).join(' '),p.tag].join(' ').toLowerCase();
+    const okQ = !q || hay.includes(q);
+    const okT = !tag || (p.tag||'').toLowerCase().includes(tag);
+    return okQ && okT;
+  });
   filtered.forEach(p=>grid.appendChild(renderCard(p)));
   countEl.textContent=`${filtered.length} play${filtered.length===1?'':'s'}`;
-  emptyEl.hidden=filtered.length>0;
+  emptyEl.hidden = filtered.length>0;
 }
 
 function renderCard(play){
@@ -166,68 +257,192 @@ function renderCard(play){
   card.appendChild(head);
 
   const svgWrap=document.createElement('div'); svgWrap.className='svg-wrap';
-  const svg=buildCourt(play); svgWrap.appendChild(svg); card.appendChild(svgWrap);
+  const {svg, api}=buildCourt(play); svgWrap.appendChild(svg); card.appendChild(svgWrap);
 
   const meta=document.createElement('div'); meta.className='meta';
-  meta.innerHTML=`<div><strong>Goal:</strong> ${play.goal}</div>
-  <div><strong>Use when:</strong> ${play.useWhen}</div>
-  <div><strong>Avoid when:</strong> ${play.avoidWhen}</div>
-  <div class="options"><strong>Options:</strong><ul>${play.options.map(o=>`<li>${o}</li>`).join('')}</ul></div>`;
+  meta.innerHTML=`
+    <div><strong>Goal:</strong> ${play.goal}</div>
+    <div><strong>Use when:</strong> ${play.useWhen}</div>
+    <div><strong>Avoid when:</strong> ${play.avoidWhen}</div>
+    <div class="options"><strong>Options:</strong><ul>${play.options.map(o=>`<li>${o}</li>`).join('')}</ul></div>
+  `;
   card.appendChild(meta);
 
   const actions=document.createElement('div'); actions.className='actions';
-  const btnSvg=document.createElement('button'); btnSvg.textContent='Download SVG';
-  btnSvg.onclick=()=>downloadSVG(svg,`${play.id}.svg`);
-  const btnPng=document.createElement('button'); btnPng.textContent='Download PNG';
-  btnPng.onclick=()=>downloadPNG(svg,`${play.id}.png`);
-  actions.appendChild(btnSvg); actions.appendChild(btnPng);
+  const runBtn=button("▶ Run", ()=>api.run());
+  const pauseBtn=button("⏸ Pause", ()=>api.pause());
+  const resetBtn=button("⟲ Reset", ()=>api.reset());
+  const dlSvg=button("Download SVG", ()=>downloadSVG(svg, `${play.id}.svg`));
+  const dlPng=button("Download PNG", ()=>downloadPNG(svg, `${play.id}.png`));
+  const speedWrap=document.createElement('label'); speedWrap.className='speed'; speedWrap.innerHTML=`Speed <input type="range" min="0.5" max="2" step="0.1" value="1">`;
+  speedWrap.querySelector('input').addEventListener('input', (e)=>api.setSpeed(parseFloat(e.target.value)));
+
+  actions.append(runBtn,pauseBtn,resetBtn,dlSvg,dlPng,speedWrap);
   card.appendChild(actions);
 
   return card;
 }
+function button(txt,fn){ const b=document.createElement('button'); b.textContent=txt; b.onclick=fn; return b; }
+
+/* ====== COURT & ANIMATION ======
+   We render a symmetric full-court outline (inspired by your image).
+   Animation: each arrow spawns a small "ghost" that moves along the path.
+   Offense dots also tween from -> to if they have a matching arrow.
+*/
+function toXY(px,py,W,H){ const PAD=12; const innerW=W-2*PAD, innerH=H-2*PAD; return {x:PAD+innerW*(px/100), y:PAD+innerH*(py/100)}; }
 
 function buildCourt(play){
-  const W=360,H=240,PAD=12;
-  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.setAttribute('viewBox',`0 0 ${W} ${H}`); svg.setAttribute('width','100%'); svg.setAttribute('height','220');
-  const rect=(x,y,w,h,r=0,fill='none',stroke='none',sw=1)=>{const el=document.createElementNS('http://www.w3.org/2000/svg','rect');el.setAttribute('x',x);el.setAttribute('y',y);el.setAttribute('width',w);el.setAttribute('height',h);if(r)el.setAttribute('rx',r);el.setAttribute('fill',fill);el.setAttribute('stroke',stroke);el.setAttribute('stroke-width',sw);return el;};
-  const line=(x1,y1,x2,y2,stroke='black',sw=1)=>{const el=document.createElementNS('http://www.w3.org/2000/svg','line');el.setAttribute('x1',x1);el.setAttribute('y1',y1);el.setAttribute('x2',x2);el.setAttribute('y2',y2);el.setAttribute('stroke',stroke);el.setAttribute('stroke-width',sw);el.setAttribute('stroke-linecap','round');return el;};
-  const circle=(cx,cy,r,fill='none',stroke='none',sw=1)=>{const el=document.createElementNS('http://www.w3.org/2000/svg','circle');el.setAttribute('cx',cx);el.setAttribute('cy',cy);el.setAttribute('r',r);el.setAttribute('fill',fill);el.setAttribute('stroke',stroke);el.setAttribute('stroke-width',sw);return el;};
-  const text=(x,y,str)=>{const el=document.createElementNS('http://www.w3.org/2000/svg','text');el.setAttribute('x',x);el.setAttribute('y',y);el.setAttribute('text-anchor','middle');el.setAttribute('font-size','10');el.setAttribute('fill','var(--ink)');el.textContent=str;return el;};
-  const arrow=(x1,y1,x2,y2)=>{const g=document.createElementNS('http://www.w3.org/2000/svg','g');const shaft=line(x1,y1,x2,y2,'var(--arrow)',2.2);g.appendChild(shaft);const ang=Math.atan2(y2-y1,x2-x1);const hl=8;const hx1=x2-hl*Math.cos(ang-Math.PI/6),hy1=y2-hl*Math.sin(ang-Math.PI/6),hx2=x2-hl*Math.cos(ang+Math.PI/6),hy2=y2-hl*Math.sin(ang+Math.PI/6);g.appendChild(line(x2,y2,hx1,hy1,'var(--arrow)',2.2));g.appendChild(line(x2,y2,hx2,hy2,'var(--arrow)',2.2));return g;};
+  const W=380, H=260, PAD=12;
+  const svg=NS('svg'); svg.setAttribute('viewBox',`0 0 ${W} ${H}`); svg.setAttribute('width','100%'); svg.setAttribute('height','230');
 
-  svg.appendChild(rect(0,0,W,H,10,'var(--court)','none'));
-  svg.appendChild(rect(PAD,PAD,W-2*PAD,H-2*PAD,10,'none','var(--court-lines)',2));
-  svg.appendChild(line(W/2,PAD,W/2,H-PAD,'var(--court-lines)',1.5));
-  svg.appendChild(circle(W/2,H/2,18,'none','var(--court-lines)',1.5));
-  const keyW=120,keyH=100; svg.appendChild(rect(W/2-keyW/2,PAD,keyW,keyH,8,'rgba(0,0,0,.04)','var(--court-lines)',1.2));
-  svg.appendChild(circle(W/2,PAD+28,6,'none','var(--court-lines)',1.2));
-  svg.appendChild(line(W/2-18,PAD+28,W/2+18,PAD+28,'var(--court-lines)',1.2));
-  (play.defense||[]).forEach(p=>{const {x,y}=toXY(p.x,p.y,W,H);svg.appendChild(circle(x,y,6,'var(--defense)','var(--defense)'));});
-  (play.offense||[]).forEach(p=>{const {x,y}=toXY(p.x,p.y,W,H);svg.appendChild(circle(x,y,6,'var(--offense)','white',1.1));if(p.label){svg.appendChild(text(x,y-10,p.label));}});
-  (play.arrows||[]).forEach(a=>{const f=toXY(a.from.x,a.from.y,W,H);const t=toXY(a.to.x,a.to.y,W,H);svg.appendChild(arrow(f.x,f.y,t.x,t.y));});
-  return svg;
+  // helpers
+  const rect=(x,y,w,h)=>EL('rect',{x,y,width:w,height:h,fill:'#fff'});
+  const line=(x1,y1,x2,y2,cls='court-line')=>EL('line',{x1,y1,x2,y2,class:cls});
+  const circle=(cx,cy,r,cls='court-line')=>EL('circle',{cx,cy,r,class:cls});
+  const path=(d,cls='court-line')=>EL('path',{d,class:cls});
+  const text=(x,y,str)=>EL('text',{x,y,'text-anchor':'middle','font-size':10,fill:'#111'},str);
+
+  // BACKGROUND
+  svg.appendChild(EL('rect',{x:0,y:0,width:W,height:H,fill:'#fff'}));
+
+  // OUTER LINES (full court look)
+  svg.appendChild(line(PAD,PAD, W-PAD,PAD));
+  svg.appendChild(line(PAD,H-PAD, W-PAD,H-PAD));
+  svg.appendChild(line(PAD,PAD, PAD,H-PAD));
+  svg.appendChild(line(W-PAD,PAD, W-PAD,H-PAD));
+  // center line & circle
+  svg.appendChild(line(W/2,PAD, W/2,H-PAD));
+  svg.appendChild(circle(W/2, H/2, 18));
+
+  // Left half-court key and arc (solid), right mirrored (for look)
+  const keyW=120, keyH=100;
+  // left key
+  svg.appendChild(EL('rect',{x:W/2-keyW/2, y:PAD, width:keyW, height:keyH, fill:'none', class:'court-line', rx:6}));
+  svg.appendChild(circle(W/2, PAD+28, 6)); // rim
+  svg.appendChild(line(W/2-18,PAD+28, W/2+18,PAD+28));
+  // 3pt arc (approx)
+  const arcR=100, arcCx=W/2, arcCy=PAD+28, arcStartX=arcCx-92, arcStartY=PAD+82, arcEndX=arcCx+92, arcEndY=PAD+82;
+  svg.appendChild(path(`M ${arcStartX} ${arcStartY} A ${arcR} ${arcR} 0 0 0 ${arcEndX} ${arcEndY}`));
+
+  // STYLE classes
+  const style=EL('style',{},`
+    .court-line{stroke:var(--line);stroke-width:1.6;fill:none}
+    .court-dash{stroke:var(--dash);stroke-width:1.4;stroke-dasharray:4 4;fill:none}
+    .off{fill:var(--offense); stroke:#fff; stroke-width:1}
+    .def{fill:var(--defense); stroke:var(--defense); stroke-width:1}
+    .arrow{stroke:var(--arrow); stroke-width:2.2; fill:none; stroke-linecap:round}
+  `);
+  svg.appendChild(style);
+
+  // Players
+  const offNodes=[], defNodes=[];
+  (play.defense||[]).forEach(p=>{
+    const {x,y}=toXY(p.x,p.y,W,H);
+    defNodes.push(EL('circle',{cx:x,cy:y,r:6,class:'def'}));
+  });
+  defNodes.forEach(n=>svg.appendChild(n));
+
+  (play.offense||[]).forEach(p=>{
+    const {x,y}=toXY(p.x,p.y,W,H);
+    const c=EL('circle',{cx:x,cy:y,r:6,class:'off'});
+    svg.appendChild(c);
+    if(p.label){ svg.appendChild(text(x,y-10,p.label)); }
+    offNodes.push(c);
+  });
+
+  // Arrows (paths + moving "ghost" dots)
+  const arrowPaths=[], movers=[];
+  (play.arrows||[]).forEach(a=>{
+    const f=toXY(a.from.x,a.from.y,W,H), t=toXY(a.to.x,a.to.y,W,H);
+    const shaft=EL('line',{x1:f.x,y1:f.y,x2:t.x,y2:t.y,class:'arrow'}); svg.appendChild(shaft);
+    // head
+    const ang=Math.atan2(t.y-f.y,t.x-f.x), hl=8;
+    const hx1=t.x-hl*Math.cos(ang-Math.PI/6), hy1=t.y-hl*Math.sin(ang-Math.PI/6);
+    const hx2=t.x-hl*Math.cos(ang+Math.PI/6), hy2=t.y-hl*Math.sin(ang+Math.PI/6);
+    svg.appendChild(EL('line',{x1:t.x,y1:t.y,x2:hx1,y2:hy1,class:'arrow'}));
+    svg.appendChild(EL('line',{x1:t.x,y1:t.y,x2:hx2,y2:hy2,class:'arrow'}));
+    // mover
+    const m=EL('circle',{cx:f.x, cy:f.y, r:4, fill:'var(--arrow)'}); svg.appendChild(m);
+    movers.push({el:m, from:f, to:t, t:0});
+    arrowPaths.push({from:f,to:t});
+  });
+
+  // Simple mapping: move the nearest offense dot to each arrow's "to"
+  const tweens=[];
+  (play.arrows||[]).forEach(a=>{
+    const f=toXY(a.from.x,a.from.y,W,H), t=toXY(a.to.x,a.to.y,W,H);
+    let best=null, idx=-1;
+    offNodes.forEach((n,i)=>{
+      const dx=n.cx.baseVal.value-f.x, dy=n.cy.baseVal.value-f.y;
+      const d=dx*dx+dy*dy;
+      if(best===null||d<best){best=d; idx=i;}
+    });
+    if(idx>=0){ tweens.push({node:offNodes[idx], from:f, to:t, t:0}); }
+  });
+
+  // Animation loop controller
+  let playing=false, speed=1, raf=null;
+  function step(ts){
+    if(!playing){ raf=null; return; }
+    const dt=0.016*speed; // ~60fps scaled
+    movers.forEach(m=>{ m.t=Math.min(1,m.t+dt/1.2); const x=m.from.x+(m.to.x-m.from.x)*m.t; const y=m.from.y+(m.to.y-m.from.y)*m.t; m.el.setAttribute('cx',x); m.el.setAttribute('cy',y); });
+    tweens.forEach(tw=>{ tw.t=Math.min(1,tw.t+dt/1.2); const x=tw.from.x+(tw.to.x-tw.from.x)*tw.t; const y=tw.from.y+(tw.to.y-tw.from.y)*tw.t; tw.node.setAttribute('cx',x); tw.node.setAttribute('cy',y); });
+    if(movers.some(m=>m.t<1) || tweens.some(tw=>tw.t<1)){ raf=requestAnimationFrame(step); } else { playing=false; raf=null; }
+  }
+  function run(){ if(!playing){ playing=true; raf=requestAnimationFrame(step); } }
+  function pause(){ playing=false; }
+  function reset(){
+    playing=false;
+    movers.forEach(m=>{ m.t=0; m.el.setAttribute('cx',m.from.x); m.el.setAttribute('cy',m.from.y); });
+    tweens.forEach(tw=>{ tw.t=0; tw.node.setAttribute('cx',tw.from.x); tw.node.setAttribute('cy',tw.from.y); });
+  }
+  function setSpeed(v){ speed=v; }
+
+  return { svg, api:{run,pause,reset,setSpeed} };
 }
 
+// ===== SVG helpers =====
+function NS(tag){ return document.createElementNS('http://www.w3.org/2000/svg', tag); }
+function EL(tag,attrs={},text){
+  const el=NS(tag); for(const k in attrs){ el.setAttribute(k, attrs[k]); }
+  if(text!=null) el.textContent=text; return el;
+}
+
+/* ===== DOWNLOADS ===== */
 function svgToString(svg){
   const clone=svg.cloneNode(true);
-  const style=document.createElement('style'); style.textContent=`:root { --court:#f6b45b; --court-lines:#2b2f36; --offense:#e63946; --defense:#1b1b1b; --arrow:#4a90e2; --ink:#e9eef5; } text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial; }`;
-  clone.insertBefore(style,clone.firstChild);
+  const style=document.createElement('style');
+  style.textContent=`:root{--line:#111;--dash:#888;--offense:#e03a3a;--defense:#111;--arrow:#1d4ed8;} text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial}`;
+  clone.insertBefore(style, clone.firstChild);
   const xml=new XMLSerializer().serializeToString(clone);
   return `<?xml version="1.0" encoding="UTF-8"?>\n`+xml;
 }
-function downloadSVG(svg,filename){
-  const str=svgToString(svg); const blob=new Blob([str],{type:'image/svg+xml'}); const url=URL.createObjectURL(blob);
-  triggerDownload(url,filename); setTimeout(()=>URL.revokeObjectURL(url),1500);
+function downloadSVG(svg, filename){
+  const str=svgToString(svg);
+  const blob=new Blob([str],{type:'image/svg+xml'});
+  const url=URL.createObjectURL(blob);
+  trigger(url, filename);
+  setTimeout(()=>URL.revokeObjectURL(url), 1200);
 }
-function downloadPNG(svg,filename){
-  const str=svgToString(svg); const img=new Image(); const svgBlob=new Blob([str],{type:'image/svg+xml'}); const url=URL.createObjectURL(svgBlob);
-  img.onload=function(){const w=svg.viewBox.baseVal.width||360,h=svg.viewBox.baseVal.height||240;const c=document.createElement('canvas');c.width=w*3;c.height=h*3;const ctx=c.getContext('2d');ctx.fillStyle='#f6b45b';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);c.toBlob(b=>{const pngUrl=URL.createObjectURL(b);triggerDownload(pngUrl,filename);setTimeout(()=>URL.revokeObjectURL(pngUrl),1500);},'image/png');};
+function downloadPNG(svg, filename){
+  const str=svgToString(svg);
+  const img=new Image();
+  const url=URL.createObjectURL(new Blob([str],{type:'image/svg+xml'}));
+  img.onload=function(){
+    const w=svg.viewBox.baseVal.width||380, h=svg.viewBox.baseVal.height||260;
+    const c=document.createElement('canvas'); c.width=w*3; c.height=h*3;
+    const ctx=c.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,c.height);
+    ctx.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url);
+    c.toBlob(b=>{ const u=URL.createObjectURL(b); trigger(u,filename); setTimeout(()=>URL.revokeObjectURL(u),1200); }, 'image/png');
+  };
   img.src=url;
 }
-function triggerDownload(url,filename){const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();}
+function trigger(url,filename){ const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); }
 
-searchEl.addEventListener('input',render);
+/* ===== BOOT ===== */
+searchEl.addEventListener('input', render);
+filterTagEl.addEventListener('change', render);
 render();
 </script>
 </body>
