@@ -1,0 +1,12 @@
+{
+  id: "unique-slug",
+  name: "Play Name",
+  goal: "What this set aims to achieve",
+  useWhen: "Situations you like it",
+  avoidWhen: "Situations to avoid",
+  options: ["Primary read", "Counter 1", "Counter 2"],
+  offense: [ {x:10,y:80,label:"1"}, ... ], // red dots
+  defense: [ {x:12,y:78}, ... ],          // black dots
+  arrows:  [ {from:{x:10,y:80}, to:{x:50,y:50}}, ... ],
+  tag: "quick hitter / zone / PnR / ATO / 5-out ..."
+}
